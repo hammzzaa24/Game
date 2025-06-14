@@ -3,18 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>النتيجة النهائية</title>
+    <title>نتيجة الإجابة</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <h1>انتهت اللعبة!</h1>
-        <div class="result-box">
-            <h2>نتيجتك النهائية هي:</h2>
-            <p class="final-score">{{ score }} من {{ total_questions }}</p>
+        <div class="question-box">
+            <h2>{{ question.text }}</h2>
         </div>
-        <a href="{{ url_for('home') }}" class="btn btn-submit">اللعب مرة أخرى</a>
+
+        {% if is_correct %}
+            <div class="feedback-box feedback-correct">
+                <h3>إجابة صحيحة! أحسنت!</h3>
+            </div>
+        {% else %}
+            <div class="feedback-box feedback-incorrect">
+                <h3>إجابة خاطئة</h3>
+                <p>إجابتك كانت: "{{ user_answer }}"</p>
+                <p>الإجابة الصحيحة هي: <strong>"{{ question.correct_answer }}"</strong></p>
+            </div>
+        {% endif %}
+
+        <div class="choices-result">
+            <h4>الخيارات:</h4>
+            {% for choice in question.choices %}
+                {% set class_name = '' %}
+                {% if choice == question.correct_answer %}
+                    {% set class_name = 'choice-correct' %}
+                {% elif choice == user_answer %}
+                    {% set class_name = 'choice-incorrect' %}
+                {% endif %}
+                <div class="choice-label {{ class_name }}">
+                    <span>{{ choice }}</span>
+                </div>
+            {% endfor %}
+        </div>
+        
+        <div class="quiz-header" style="margin-top: 20px;">
+            <span>النتيجة الحالية: {{ score }} / {{ total_questions }}</span>
+        </div>
+
+        {% if session.question_index < total_questions %}
+            <a href="{{ url_for('quiz') }}" class="btn btn-submit">السؤال التالي</a>
+        {% else %}
+            <a href="{{ url_for('result') }}" class="btn btn-submit">عرض النتيجة النهائية</a>
+        {% endif %}
     </div>
 </body>
 </html>
