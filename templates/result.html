@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>النتيجة النهائية</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>انتهت اللعبة!</h1>
+        <div class="result-box">
+            <h2>نتيجتك النهائية هي:</h2>
+            <p class="final-score">{{ score }} من {{ total_questions }}</p>
+        </div>
+        <a href="{{ url_for('home') }}" class="btn btn-submit">اللعب مرة أخرى</a>
+    </div>
+</body>
+</html>

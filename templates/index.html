@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لعبة الأسئلة - اختر الصعوبة</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>لعبة الأسئلة</h1>
+        <p>مرحباً بك! اختر مستوى الصعوبة لبدء اللعب.</p>
+        <form action="{{ url_for('start_quiz') }}" method="post" class="difficulty-form">
+            <div class="difficulty-options">
+                <button type="submit" name="difficulty" value="easy" class="btn btn-easy">سهل</button>
+                <button type="submit" name="difficulty" value="medium" class="btn btn-medium">متوسط</button>
+                <button type="submit" name="difficulty" value="hard" class="btn btn-hard">صعب</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
