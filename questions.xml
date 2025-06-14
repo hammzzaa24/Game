@@ -1,89 +1,143 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <quiz>
-    <!-- Easy Questions -->
+    <!-- ألغاز سهلة -->
     <question difficulty="easy">
-        <text>ما هي عاصمة المملكة العربية السعودية؟</text>
+        <text>حاجة تمشي بلا كرعين (أرجل) وتبكي بلا عينين، ما هي؟</text>
         <answers>
-            <answer correct="true">الرياض</answer>
-            <answer>جدة</answer>
-            <answer>الدمام</answer>
-            <answer>مكة المكرمة</answer>
+            <answer correct="true">السحابة</answer>
+            <answer>الحلزون</answer>
+            <answer>النهر</answer>
+            <answer>الأفعى</answer>
         </answers>
     </question>
     <question difficulty="easy">
-        <text>ما هو أكبر كوكب في المجموعة الشمسية؟</text>
+        <text>دارنا حمرا وسكانها عبيد (سود)، ما هي؟</text>
         <answers>
-            <answer correct="true">المشتري</answer>
-            <answer>زحل</answer>
-            <answer>الأرض</answer>
-            <answer>المريخ</answer>
+            <answer correct="true">الدلاعة (البطيخ الأحمر)</answer>
+            <answer>الرمان</answer>
+            <answer>الفلفل الحار</answer>
+            <answer>علبة الكبريت</answer>
         </answers>
     </question>
     <question difficulty="easy">
-        <text>كم عدد ألوان قوس قزح؟</text>
+        <text>يضرب بلا يدين ويمشي بلا رجلين، فمن هو؟</text>
         <answers>
-            <answer correct="true">7</answer>
-            <answer>5</answer>
-            <answer>8</answer>
-            <answer>6</answer>
+            <answer correct="true">الساعة</answer>
+            <answer>الريح</answer>
+            <answer>القلب</answer>
+            <answer>البرق</answer>
+        </answers>
+    </question>
+    <question difficulty="easy">
+        <text>عندها الرقبة وماعندهاش الراس، وعندها اليدين وماعندهاش الصباع (الأصابع)، ما هي؟</text>
+        <answers>
+            <answer correct="true">القميص (الجبة)</answer>
+            <answer>الكرسي</answer>
+            <answer>القارورة</answer>
+            <answer>الشجرة</answer>
+        </answers>
+    </question>
+     <question difficulty="easy">
+        <text>يطير بلا جناحين و يلسع بلا فم، ما هو؟</text>
+        <answers>
+            <answer correct="true">البرد (الطقس البارد)</answer>
+            <answer>الرصاصة</answer>
+            <answer>النحلة</answer>
+            <answer>النظر</answer>
         </answers>
     </question>
 
-    <!-- Medium Questions -->
+    <!-- ألغاز متوسطة -->
     <question difficulty="medium">
-        <text>من هو مخترع المصباح الكهربائي؟</text>
+        <text>طير طايير في السما، نصو فضة ونصو نحاس، ما هو؟</text>
         <answers>
-            <answer correct="true">توماس إديسون</answer>
-            <answer>ألكسندر غراهام بيل</answer>
-            <answer>إسحاق نيوتن</answer>
-            <answer>ألبرت أينشتاين</answer>
+            <answer correct="true">البيضة</answer>
+            <answer>الشمس والقمر</answer>
+            <answer>الطائرة</answer>
+            <answer>العملة المعدنية</answer>
         </answers>
     </question>
     <question difficulty="medium">
-        <text>في أي قارة تقع مصر؟</text>
+        <text>خضرة من برا وحمرا من داخل، وفي قلبها جيش كحل (أسود)، ما هي؟</text>
         <answers>
-            <answer correct="true">أفريقيا</answer>
-            <answer>آسيا</answer>
-            <answer>أوروبا</answer>
-            <answer>تقع بين أفريقيا وآسيا</answer>
+            <answer correct="true">الدلاعة (البطيخ الأحمر)</answer>
+            <answer>التفاحة</answer>
+            <answer>الرمانة</answer>
+            <answer>البرتقالة</answer>
         </answers>
     </question>
     <question difficulty="medium">
-        <text>ما هي أطول سورة في القرآن الكريم؟</text>
+        <text>حفرة مافيهاش التراب، ما هي؟</text>
         <answers>
-            <answer correct="true">سورة البقرة</answer>
-            <answer>سورة آل عمران</answer>
-            <answer>سورة النساء</answer>
-            <answer>سورة المائدة</answer>
+            <answer correct="true">السجن</answer>
+            <answer>البئر</answer>
+            <answer>الجرح</answer>
+            <answer>القبر</answer>
+        </answers>
+    </question>
+    <question difficulty="medium">
+        <text>عمتك خالة بوك (أبيك)، شكون (من) هي؟</text>
+        <answers>
+            <answer correct="true">أخت جدك (عمتك)</answer>
+            <answer>أمي</answer>
+            <answer>أختي</answer>
+            <answer>خالتي</answer>
+        </answers>
+    </question>
+    <question difficulty="medium">
+        <text>نسقيوها من لحمها ودمها، وكي تكبر نبيعوها، ما هي؟</text>
+        <answers>
+            <answer correct="true">الشمعة</answer>
+            <answer>النخلة</answer>
+            <answer>الدجاجة</answer>
+            <answer>الزهرية</answer>
         </answers>
     </question>
 
-    <!-- Hard Questions -->
+    <!-- ألغاز صعبة -->
     <question difficulty="hard">
-        <text>ما هي سرعة الضوء في الفراغ (تقريبًا)؟</text>
+        <text>ميت يرفد في حي، والحي يعيط ويصيح، ما هو؟</text>
         <answers>
-            <answer correct="true">300,000 كم/ثانية</answer>
-            <answer>150,000 كم/ثانية</answer>
-            <answer>500,000 كم/ثانية</answer>
-            <answer>1,000,000 كم/ثانية</answer>
+            <answer correct="true">الجرس في عنق البهيمة</answer>
+            <answer>النعش</answer>
+            <answer>السفينة والركاب</answer>
+            <answer>الأم وطفلها</answer>
         </answers>
     </question>
     <question difficulty="hard">
-        <text>من هو مؤلف كتاب "مقدمة ابن خلدون"؟</text>
+        <text>حاجة كي تشوفها ما تلبسهاش، وكي تلبسها ما تشوفهاش، ما هي؟</text>
         <answers>
-            <answer correct="true">عبد الرحمن بن خلدون</answer>
-            <answer>ابن سينا</answer>
-            <answer>الفارابي</answer>
-            <answer>الجاحظ</answer>
+            <answer correct="true">الكفن</answer>
+            <answer>النظارات</answer>
+            <answer>القبعة</answer>
+            <answer>الجوارب</answer>
         </answers>
     </question>
     <question difficulty="hard">
-        <text>في أي عام انتهت الحرب العالمية الثانية؟</text>
+        <text> ثلاثة خاوة (إخوة)، واحد يمشي وما يرجعش، وواحد ياكل وما يشبعش، وواحد راقد ما ينوضش (لا ينهض)، فمن هم؟</text>
         <answers>
-            <answer correct="true">1945</answer>
-            <answer>1939</answer>
-            <answer>1918</answer>
-            <answer>1942</answer>
+            <answer correct="true">الدخان والنار والرماد</answer>
+            <answer>الماضي والحاضر والمستقبل</answer>
+            <answer>النهر والبحر والحجر</answer>
+            <answer>العمر والجوع والموت</answer>
+        </answers>
+    </question>
+    <question difficulty="hard">
+        <text>جداتو بقرة وخالاتو شجرة، وهو يتباع في الحوانت (المتاجر)، ما هو؟</text>
+        <answers>
+            <answer correct="true">المسواك</answer>
+            <answer>الجلد</answer>
+            <answer>التمر</answer>
+            <answer>اللبن</answer>
+        </answers>
+    </question>
+     <question difficulty="hard">
+        <text>واش هي الحاجة اللي عندها خمس صوابع (أصابع) بصح ماشي يد؟</text>
+        <answers>
+            <answer correct="true">القفاز</answer>
+            <answer>المشط</answer>
+            <answer>الشوكة</answer>
+            <answer>ورقة الشجر</answer>
         </answers>
     </question>
 </quiz>
