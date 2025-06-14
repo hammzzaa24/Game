@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+    <!-- Easy Questions -->
+    <question difficulty="easy">
+        <text>ما هي عاصمة المملكة العربية السعودية؟</text>
+        <answers>
+            <answer correct="true">الرياض</answer>
+            <answer>جدة</answer>
+            <answer>الدمام</answer>
+            <answer>مكة المكرمة</answer>
+        </answers>
+    </question>
+    <question difficulty="easy">
+        <text>ما هو أكبر كوكب في المجموعة الشمسية؟</text>
+        <answers>
+            <answer correct="true">المشتري</answer>
+            <answer>زحل</answer>
+            <answer>الأرض</answer>
+            <answer>المريخ</answer>
+        </answers>
+    </question>
+    <question difficulty="easy">
+        <text>كم عدد ألوان قوس قزح؟</text>
+        <answers>
+            <answer correct="true">7</answer>
+            <answer>5</answer>
+            <answer>8</answer>
+            <answer>6</answer>
+        </answers>
+    </question>
+
+    <!-- Medium Questions -->
+    <question difficulty="medium">
+        <text>من هو مخترع المصباح الكهربائي؟</text>
+        <answers>
+            <answer correct="true">توماس إديسون</answer>
+            <answer>ألكسندر غراهام بيل</answer>
+            <answer>إسحاق نيوتن</answer>
+            <answer>ألبرت أينشتاين</answer>
+        </answers>
+    </question>
+    <question difficulty="medium">
+        <text>في أي قارة تقع مصر؟</text>
+        <answers>
+            <answer correct="true">أفريقيا</answer>
+            <answer>آسيا</answer>
+            <answer>أوروبا</answer>
+            <answer>تقع بين أفريقيا وآسيا</answer>
+        </answers>
+    </question>
+    <question difficulty="medium">
+        <text>ما هي أطول سورة في القرآن الكريم؟</text>
+        <answers>
+            <answer correct="true">سورة البقرة</answer>
+            <answer>سورة آل عمران</answer>
+            <answer>سورة النساء</answer>
+            <answer>سورة المائدة</answer>
+        </answers>
+    </question>
+
+    <!-- Hard Questions -->
+    <question difficulty="hard">
+        <text>ما هي سرعة الضوء في الفراغ (تقريبًا)؟</text>
+        <answers>
+            <answer correct="true">300,000 كم/ثانية</answer>
+            <answer>150,000 كم/ثانية</answer>
+            <answer>500,000 كم/ثانية</answer>
+            <answer>1,000,000 كم/ثانية</answer>
+        </answers>
+    </question>
+    <question difficulty="hard">
+        <text>من هو مؤلف كتاب "مقدمة ابن خلدون"؟</text>
+        <answers>
+            <answer correct="true">عبد الرحمن بن خلدون</answer>
+            <answer>ابن سينا</answer>
+            <answer>الفارابي</answer>
+            <answer>الجاحظ</answer>
+        </answers>
+    </question>
+    <question difficulty="hard">
+        <text>في أي عام انتهت الحرب العالمية الثانية؟</text>
+        <answers>
+            <answer correct="true">1945</answer>
+            <answer>1939</answer>
+            <answer>1918</answer>
+            <answer>1942</answer>
+        </answers>
+    </question>
+</quiz>
