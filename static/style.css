@@ -1,0 +1,147 @@
+/* Basic Reset and Font */
+body {
+    font-family: 'Cairo', sans-serif;
+    background-color: #f0f4f8;
+    color: #333;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    direction: rtl;
+}
+
+/* Main Container */
+.container {
+    background-color: #ffffff;
+    padding: 30px 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 90%;
+    max-width: 600px;
+}
+
+h1 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+h2 {
+    color: #34495e;
+    margin-bottom: 20px;
+}
+
+p {
+    font-size: 1.1rem;
+    color: #7f8c8d;
+    margin-bottom: 30px;
+}
+
+/* Buttons */
+.btn {
+    border: none;
+    border-radius: 8px;
+    padding: 15px 30px;
+    font-size: 1.1rem;
+    font-family: 'Cairo', sans-serif;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-decoration: none;
+    color: #fff;
+    display: inline-block;
+    margin: 5px;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.difficulty-options {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.btn-easy { background: linear-gradient(45deg, #2ecc71, #27ae60); }
+.btn-medium { background: linear-gradient(45deg, #f39c12, #e67e22); }
+.btn-hard { background: linear-gradient(45deg, #e74c3c, #c0392b); }
+.btn-submit { background: linear-gradient(45deg, #3498db, #2980b9); width: 80%; margin-top: 20px;}
+
+/* Quiz Page Specifics */
+.quiz-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1rem;
+    color: #7f8c8d;
+    padding: 10px;
+    border-bottom: 1px solid #ecf0f1;
+    margin-bottom: 20px;
+}
+
+.question-box {
+    background-color: #ecf0f1;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+}
+
+.choices {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.choice-label {
+    display: block;
+    background-color: #f8f9fa;
+    border: 2px solid #ecf0f1;
+    border-radius: 8px;
+    padding: 15px;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+    text-align: right;
+}
+
+.choice-label:hover {
+    background-color: #e9ecef;
+}
+
+.choice-label input[type="radio"] {
+    display: none;
+}
+
+.choice-label input[type="radio"]:checked + span {
+    font-weight: 700;
+    color: #3498db;
+}
+.choice-label input[type="radio"]:checked + span::before {
+    content: '✔ ';
+}
+
+.back-link {
+    display: inline-block;
+    margin-top: 20px;
+    color: #7f8c8d;
+    text-decoration: none;
+}
+
+/* Result Page */
+.result-box {
+    background-color: #e8f5e9;
+    border: 2px solid #a5d6a7;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 30px 0;
+}
+
+.final-score {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2e7d32;
+    margin: 10px 0 0 0;
+}
+
