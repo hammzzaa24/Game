@@ -18,7 +18,8 @@
         </div>
         <form action="{{ url_for('answer') }}" method="post">
             <div class="choices">
-                {% for choice in question.choices %}
+                {# هذا هو السطر الذي تم تصحيحه. الآن يتم استخدام الخيارات المخلوطة #}
+                {% for choice in shuffled_choices %}
                 <label class="choice-label">
                     <input type="radio" name="choice" value="{{ choice }}" required>
                     <span>{{ choice }}</span>
