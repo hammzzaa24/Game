@@ -53,7 +53,6 @@ def home():
     """
     Displays the home page to select the difficulty level.
     """
-    # Clear any previous session data
     session.clear()
     return render_template('index.html')
 
@@ -63,18 +62,13 @@ def start_quiz():
     Starts the quiz based on the selected difficulty.
     """
     difficulty = request.form.get('difficulty')
-    
-    # Filter questions by the selected difficulty
     questions_by_difficulty = [q for q in all_questions if q['difficulty'] == difficulty]
     
     if not questions_by_difficulty:
-        # Handle case where no questions are found for the selected difficulty
         return redirect(url_for('home'))
 
-    # Shuffle the questions for randomness
     random.shuffle(questions_by_difficulty)
 
-    # Store game state in the session
     session['questions'] = questions_by_difficulty
     session['question_index'] = 0
     session['score'] = 0
@@ -93,16 +87,17 @@ def quiz():
     questions = session.get('questions', [])
 
     if question_index >= len(questions):
-        # If all questions have been answered, show the result
         return redirect(url_for('result'))
         
     current_question = questions[question_index]
-    # Shuffle choices for each question to make it more challenging
-    random.shuffle(current_question['choices'])
+    # Make a copy and shuffle choices to ensure original isn't modified
+    shuffled_choices = list(current_question['choices'])
+    random.shuffle(shuffled_choices)
 
     return render_template(
         'quiz.html', 
         question=current_question,
+        shuffled_choices=shuffled_choices,
         question_number=question_index + 1,
         total_questions=len(questions),
         score=session.get('score', 0)
@@ -111,7 +106,7 @@ def quiz():
 @app.route('/answer', methods=['POST'])
 def answer():
     """
-    Processes the user's answer and moves to the next question.
+    Processes the user's answer and shows the result of that answer.
     """
     if 'questions' not in session:
         return redirect(url_for('home'))
@@ -120,14 +115,28 @@ def answer():
     question_index = session.get('question_index', 0)
     questions = session.get('questions', [])
     
-    if question_index < len(questions):
-        correct_answer = questions[question_index]['correct_answer']
-        if user_answer == correct_answer:
-            session['score'] = session.get('score', 0) + 1
-        
-        session['question_index'] = question_index + 1
+    # Ensure there is a question to answer
+    if question_index >= len(questions):
+        return redirect(url_for('result'))
 
-    return redirect(url_for('quiz'))
+    current_question = questions[question_index]
+    correct_answer = current_question['correct_answer']
+    is_correct = (user_answer == correct_answer)
+
+    if is_correct:
+        session['score'] = session.get('score', 0) + 1
+        
+    # Move to the next question index in the session
+    session['question_index'] = question_index + 1
+    
+    return render_template(
+        'answer_result.html',
+        question=current_question,
+        user_answer=user_answer,
+        is_correct=is_correct,
+        score=session.get('score', 0),
+        total_questions=len(questions)
+    )
 
 @app.route('/result')
 def result():
