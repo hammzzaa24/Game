@@ -9,6 +9,7 @@ body {
     align-items: center;
     min-height: 100vh;
     direction: rtl;
+    padding: 20px 0;
 }
 
 /* Main Container */
@@ -22,21 +23,10 @@ body {
     max-width: 600px;
 }
 
-h1 {
-    color: #2c3e50;
-    margin-bottom: 10px;
-}
-
-h2 {
-    color: #34495e;
-    margin-bottom: 20px;
-}
-
-p {
-    font-size: 1.1rem;
-    color: #7f8c8d;
-    margin-bottom: 30px;
-}
+h1 { color: #2c3e50; margin-bottom: 10px; }
+h2 { color: #34495e; margin-bottom: 20px; }
+h3 { margin-top: 0; }
+p { font-size: 1.1rem; color: #7f8c8d; margin-bottom: 30px; }
 
 /* Buttons */
 .btn {
@@ -106,28 +96,41 @@ p {
     text-align: right;
 }
 
-.choice-label:hover {
-    background-color: #e9ecef;
+.choice-label:hover { background-color: #e9ecef; }
+.choice-label input[type="radio"] { display: none; }
+.choice-label input[type="radio"]:checked + span { font-weight: 700; color: #3498db; }
+.choice-label input[type="radio"]:checked + span::before { content: '✔ '; }
+.back-link { display: inline-block; margin-top: 20px; color: #7f8c8d; text-decoration: none; }
+
+/* Answer Result Page Specifics */
+.feedback-box {
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    color: #fff;
+}
+.feedback-box p { color: #fff; margin-bottom: 5px; }
+.feedback-correct { background-color: #28a745; }
+.feedback-incorrect { background-color: #dc3545; }
+
+.choices-result { margin-top: 20px; }
+.choices-result .choice-label {
+    cursor: default;
+    margin-bottom: 10px;
+}
+.choices-result .choice-correct {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    color: #155724;
+    font-weight: bold;
+}
+.choices-result .choice-incorrect {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
+    text-decoration: line-through;
 }
 
-.choice-label input[type="radio"] {
-    display: none;
-}
-
-.choice-label input[type="radio"]:checked + span {
-    font-weight: 700;
-    color: #3498db;
-}
-.choice-label input[type="radio"]:checked + span::before {
-    content: '✔ ';
-}
-
-.back-link {
-    display: inline-block;
-    margin-top: 20px;
-    color: #7f8c8d;
-    text-decoration: none;
-}
 
 /* Result Page */
 .result-box {
@@ -144,4 +147,3 @@ p {
     color: #2e7d32;
     margin: 10px 0 0 0;
 }
-
