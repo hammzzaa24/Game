@@ -42,7 +42,7 @@ except Exception as e:
     exit(1)
 
 # --- ثوابت عامة ---
-RUN_INTERVAL_HOURS: int = 4  # الفاصل الزمني الرئيسي للتشغيل (4 ساعات)
+RUN_INTERVAL_HOURS: int = 2  # الفاصل الزمني الرئيسي للتشغيل (4 ساعات)
 CRYPTO_LIST_FILENAME: str = 'crypto_list.txt'
 MAX_WORKERS: int = 10 # لعمليات التحليل المتوازية
 API_RETRY_ATTEMPTS: int = 3
@@ -50,7 +50,7 @@ API_RETRY_DELAY: int = 5
 
 # --- ثوابت حاسبة إيشيموكو (Ichimoku) ---
 ICHIMOKU_TIMEFRAME: str = '15m'
-ICHIMOKU_DATA_LOOKBACK_DAYS: int = 180
+ICHIMOKU_DATA_LOOKBACK_DAYS: int = 7
 ICHIMOKU_TENKAN_PERIOD: int = 9
 ICHIMOKU_KIJUN_PERIOD: int = 26
 ICHIMOKU_SENKOU_B_PERIOD: int = 52
