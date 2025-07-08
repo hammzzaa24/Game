@@ -42,7 +42,7 @@ except Exception as e:
     exit(1)
 
 # --- ثوابت عامة ---
-RUN_INTERVAL_HOURS: int = 2  # الفاصل الزمني الرئيسي للتشغيل (4 ساعات)
+RUN_INTERVAL_HOURS: int = 1  # الفاصل الزمني الرئيسي للتشغيل (4 ساعات)
 CRYPTO_LIST_FILENAME: str = 'crypto_list.txt'
 MAX_WORKERS: int = 10 # لعمليات التحليل المتوازية
 API_RETRY_ATTEMPTS: int = 3
