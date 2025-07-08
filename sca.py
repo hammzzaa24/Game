@@ -42,9 +42,9 @@ except Exception as e:
     exit(1)
 
 # --- ثوابت عامة ---
-RUN_INTERVAL_HOURS: int = 1  # الفاصل الزمني الرئيسي للتشغيل (4 ساعات)
+RUN_INTERVAL_HOURS: int = 2
 CRYPTO_LIST_FILENAME: str = 'crypto_list.txt'
-MAX_WORKERS: int = 10 # لعمليات التحليل المتوازية
+MAX_WORKERS: int = 10
 API_RETRY_ATTEMPTS: int = 3
 API_RETRY_DELAY: int = 5
 
@@ -132,7 +132,6 @@ def setup_database_tables(conn: psycopg2.extensions.connection):
         with conn.cursor() as cur:
             for query in queries:
                 cur.execute(query)
-            # Check and add 'score' column if missing (for backward compatibility)
             cur.execute("SELECT 1 FROM information_schema.columns WHERE table_name='support_resistance_levels' AND column_name='score'")
             if not cur.fetchone():
                 cur.execute("ALTER TABLE support_resistance_levels ADD COLUMN score NUMERIC DEFAULT 0;")
@@ -252,7 +251,7 @@ def run_ichimoku_analysis(client: Client, conn: psycopg2.extensions.connection, 
             save_ichimoku_to_db(conn, symbol, df_with_ichimoku, ICHIMOKU_TIMEFRAME)
         except Exception as e:
             logger.error(f"❌ [Ichimoku] خطأ حرج أثناء معالجة {symbol}: {e}", exc_info=True)
-        time.sleep(1) # تأخير بسيط بين الطلبات
+        time.sleep(1)
     logger.info("✅ [Ichimoku] انتهت دورة حساب مؤشر إيشيموكو.")
 
 # ==============================================================================
@@ -387,30 +386,65 @@ def analyze_single_symbol_sr(symbol: str, client: Client) -> List[Dict]:
     logger.info(f"--- ✅ [S/R] انتهى تحليل {symbol}، تم العثور على {len(final_levels)} مستوى نهائي.")
     return final_levels
 
+# --- ✨ MODIFIED FUNCTION / الدالة المعدلة ✨ ---
 def save_sr_levels_to_db(conn: psycopg2.extensions.connection, all_levels: List[Dict]):
-    """Batch saves all found S/R levels to the database, deleting old ones first."""
+    """
+    Saves all found S/R levels to the database atomically using a temporary table
+    to prevent race conditions.
+    """
     if not all_levels:
         logger.info("ℹ️ [DB-S/R] لا توجد مستويات لحفظها.")
         return
     
-    logger.info(f"⏳ [DB-S/R] جاري حفظ {len(all_levels)} مستوى في قاعدة البيانات...")
+    symbols = list(set(level['symbol'] for level in all_levels))
+    temp_table_name = f"temp_sr_levels_{int(time.time())}"
+
+    logger.info(f"⏳ [DB-S/R] جاري حفظ {len(all_levels)} مستوى لـ {len(symbols)} عملة باستخدام معاملة ذرية...")
+    
     try:
         with conn.cursor() as cur:
-            symbols = list(set(level['symbol'] for level in all_levels))
-            cur.execute("DELETE FROM support_resistance_levels WHERE symbol = ANY(%s);", (symbols,))
-            logger.info(f"[DB-S/R] تم حذف البيانات القديمة لـ {len(symbols)} عملة.")
-            
-            insert_query = """
-                INSERT INTO support_resistance_levels (symbol, level_price, level_type, timeframe, strength, score, last_tested_at, details) 
-                VALUES %s ON CONFLICT (symbol, level_price, timeframe, level_type, details) DO NOTHING;
+            # 1. Create a temporary table
+            cur.execute(f"""
+                CREATE TEMP TABLE {temp_table_name} (
+                    symbol TEXT NOT NULL,
+                    level_price DOUBLE PRECISION NOT NULL,
+                    level_type TEXT NOT NULL,
+                    timeframe TEXT NOT NULL,
+                    strength NUMERIC NOT NULL,
+                    score NUMERIC DEFAULT 0,
+                    last_tested_at TIMESTAMP WITH TIME ZONE,
+                    details TEXT
+                );
+            """)
+
+            # 2. Insert new data into the temporary table
+            insert_query = f"""
+                INSERT INTO {temp_table_name} (symbol, level_price, level_type, timeframe, strength, score, last_tested_at, details) 
+                VALUES %s;
             """
             values = [(l['symbol'], l['level_price'], l['level_type'], l['timeframe'], l['strength'], l['score'], l.get('last_tested_at'), l.get('details')) for l in all_levels]
             execute_values(cur, insert_query, values)
+            logger.info(f"[DB-S/R] تم إدراج {len(values)} مستوى في الجدول المؤقت.")
+
+            # 3. In a single transaction, delete old data and insert new data
+            cur.execute("LOCK TABLE support_resistance_levels IN EXCLUSIVE MODE;")
+            cur.execute("DELETE FROM support_resistance_levels WHERE symbol = ANY(%s);", (symbols,))
+            logger.info(f"[DB-S/R] تم حذف البيانات القديمة من الجدول الرئيسي.")
+            
+            cur.execute(f"""
+                INSERT INTO support_resistance_levels (symbol, level_price, level_type, timeframe, strength, score, last_tested_at, details)
+                SELECT * FROM {temp_table_name};
+            """)
+            logger.info(f"[DB-S/R] تم إدراج البيانات الجديدة في الجدول الرئيسي.")
+
+        # 4. Commit the transaction
         conn.commit()
-        logger.info(f"✅ [DB-S/R] تم حفظ جميع مستويات الدعم والمقاومة بنجاح.")
+        logger.info(f"✅ [DB-S/R] تم حفظ جميع مستويات الدعم والمقاومة بنجاح (معاملة مكتملة).")
+
     except Exception as e:
         logger.error(f"❌ [DB-S/R] خطأ أثناء الحفظ المجمع: {e}", exc_info=True)
         conn.rollback()
+    # The temporary table is automatically dropped at the end of the session.
 
 def run_sr_analysis(client: Client, conn: psycopg2.extensions.connection, symbols: List[str]):
     """Main function for the S/R analysis part."""
@@ -446,38 +480,30 @@ def main_analysis_job():
     The main scheduled job that runs both Ichimoku and S/R analysis in a loop.
     """
     while True:
-        logger.info(f" ciclo de análisis combinado... Próxima ejecución en {RUN_INTERVAL_HOURS} horas.")
+        logger.info(f"🚀 بدء دورة التحليل المدمجة... ستعمل الدورة التالية خلال {RUN_INTERVAL_HOURS} ساعة.")
         
         client = None
         conn = None
         
         try:
-            # تهيئة الاتصالات مرة واحدة في بداية كل دورة
             client = get_binance_client()
             conn = init_db()
 
             if not client or not conn:
                 logger.critical("❌ فشل في تهيئة الاتصالات. سيتم تخطي هذه الدورة.")
             else:
-                # التأكد من وجود الجداول
                 setup_database_tables(conn)
-                
-                # الحصول على قائمة العملات مرة واحدة
                 symbols_to_process = get_validated_symbols(client, CRYPTO_LIST_FILENAME)
                 
                 if not symbols_to_process:
                     logger.warning("⚠️ لا توجد عملات صالحة للمعالجة في هذه الدورة.")
                 else:
-                    # --- تشغيل تحليل إيشيموكو ---
                     run_ichimoku_analysis(client, conn, symbols_to_process)
-                    
-                    # --- تشغيل تحليل الدعم والمقاومة ---
                     run_sr_analysis(client, conn, symbols_to_process)
 
         except Exception as e:
             logger.critical(f"❌ حدث خطأ غير متوقع في حلقة العمل الرئيسية: {e}", exc_info=True)
         finally:
-            # إغلاق الاتصال بقاعدة البيانات في نهاية كل دورة
             if conn:
                 conn.close()
                 logger.info("✅ [DB] تم إغلاق اتصال قاعدة البيانات لهذه الدورة.")
@@ -494,12 +520,12 @@ def health_check():
 
 # --- نقطة انطلاق البرنامج ---
 if __name__ == "__main__":
-    # تشغيل مهمة التحليل الرئيسية في خيط منفصل
     analysis_thread = Thread(target=main_analysis_job, daemon=True)
     analysis_thread.start()
     
-    # تشغيل خادم الويب في الخيط الرئيسي
     port = int(os.environ.get("PORT", 10000))
     logger.info(f"🌐 بدء تشغيل خادم فحص الحالة على المنفذ {port}")
-    # استخدم 'waitress' أو 'gunicorn' في بيئة الإنتاج بدلاً من app.run()
-    app.run(host='0.0.0.0', port=port)
+    
+    # For production, use a proper WSGI server like waitress or gunicorn
+    from waitress import serve
+    serve(app, host='0.0.0.0', port=port)
